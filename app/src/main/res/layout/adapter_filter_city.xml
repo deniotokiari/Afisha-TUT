@@ -10,8 +10,11 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@+id/check_mark"
-        android:padding="12dp"
-        android:textColor="@color/colorPrimary"
+        android:paddingStart="24dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="12dp"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
         tools:text="Title" />
 
@@ -22,14 +25,11 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:contentDescription="@null"
-        android:padding="8dp"
+        android:paddingStart="24dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="12dp"
         android:src="@drawable/ic_check"
         android:visibility="gone"
         tools:visibility="visible" />
-
-    <include
-        layout="@layout/view_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/title" />
 </RelativeLayout>

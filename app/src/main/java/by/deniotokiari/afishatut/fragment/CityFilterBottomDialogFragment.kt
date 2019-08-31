@@ -5,18 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.deniotokiari.afishatut.R
 import by.deniotokiari.afishatut.api.City
 import by.deniotokiari.afishatut.viewmodel.EventsViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.adapter_filter_city.view.*
 import kotlinx.android.synthetic.main.fragment_bottom_filter_city.*
-import kotlinx.android.synthetic.main.view_divider.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class CityFilterBottomDialogFragment : BottomSheetDialogFragment() {
+class CityFilterBottomDialogFragment : DialogFragment() {
 
     private val viewModel: EventsViewModel by sharedViewModel()
 
@@ -81,10 +80,8 @@ class CityFilterBottomDialogFragment : BottomSheetDialogFragment() {
         override fun onBindViewHolder(holder: FilterViewHolder, position: Int) {
             val item: City = items[position]
 
-            viewModel.city.value?.also { holder.bind(item, isLast(position), it) }
+            viewModel.city.value?.also { holder.bind(item, it) }
         }
-
-        private fun isLast(position: Int): Boolean = position == items.size - 1
 
         fun updateItems(items: List<City>) {
             this.items.clear()
@@ -100,7 +97,7 @@ class CityFilterBottomDialogFragment : BottomSheetDialogFragment() {
         view: View
     ) : RecyclerView.ViewHolder(view) {
 
-        fun bind(item: City, isLast: Boolean, currentCity: City) {
+        fun bind(item: City, currentCity: City) {
             itemView.title.text = context.getText(item.title)
             itemView.tag = item
             itemView.setOnClickListener(clickListener)
@@ -109,12 +106,6 @@ class CityFilterBottomDialogFragment : BottomSheetDialogFragment() {
                 View.VISIBLE
             } else {
                 View.GONE
-            }
-
-            itemView.divider.visibility = if (isLast) {
-                View.GONE
-            } else {
-                View.VISIBLE
             }
         }
     }

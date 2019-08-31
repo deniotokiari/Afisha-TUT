@@ -25,7 +25,16 @@
         android:name="by.deniotokiari.afishatut.fragment.CityFilterBottomDialogFragment"
         tools:layout="@layout/fragment_bottom_filter_city" />
 
+    <dialog
+        android:id="@+id/date_picker_dialog"
+        android:name="by.deniotokiari.afishatut.fragment.DatePickerDialogFragment">
+    </dialog>
+
     <action
         android:id="@+id/open_city_filter"
         app:destination="@id/city_filter_dialog" />
+
+    <action
+        android:id="@+id/open_date_picker"
+        app:destination="@id/date_picker_dialog" />
 </navigation>

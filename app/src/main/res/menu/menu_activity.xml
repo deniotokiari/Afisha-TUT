@@ -3,9 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:id="@+id/city"
-        android:title="@null"
-        app:showAsAction="always"
+        android:id="@+id/end"
         android:enabled="true"
+        android:title="@null"
+        app:showAsAction="ifRoom"
+        tools:title="1 Sep" />
+    <item
+        android:id="@+id/start"
+        android:enabled="true"
+        android:title="@null"
+        app:showAsAction="ifRoom"
+        tools:title="31 Aug" />
+    <item
+        android:id="@+id/city"
+        android:enabled="true"
+        android:title="@null"
+        app:showAsAction="ifRoom"
         tools:title="Minsk" />
 </menu>

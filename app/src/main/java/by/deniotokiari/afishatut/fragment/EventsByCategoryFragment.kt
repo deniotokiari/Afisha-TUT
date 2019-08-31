@@ -11,8 +11,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import by.deniotokiari.afishatut.R
 import by.deniotokiari.afishatut.adapter.EventsRecyclerVIewAdapter
+import by.deniotokiari.afishatut.extensions.observe
 import by.deniotokiari.afishatut.thirdparty.ImageLoader
 import by.deniotokiari.afishatut.viewmodel.EventsViewModel
+import by.deniotokiari.afishatut.viewmodel.Resource
 import kotlinx.android.synthetic.main.fragment_events_by_category.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -41,5 +43,15 @@ class EventsByCategoryFragment : Fragment() {
         }
 
         adapter.updateItems(eventsViewModel.getEventsByCategory(args.category))
+
+        swipe_to_refresh.setOnRefreshListener { eventsViewModel.refresh() }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        observe(eventsViewModel.categories) {
+            swipe_to_refresh.isRefreshing = !(it is Resource.Success || it is Resource.Error)
+        }
     }
 }

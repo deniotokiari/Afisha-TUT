@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import by.deniotokiari.afishatut.MainActivityNavGraphDirections
 import by.deniotokiari.afishatut.R
+import by.deniotokiari.afishatut.extensions.observe
 import by.deniotokiari.afishatut.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -29,9 +29,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_activity, menu)
 
-        viewModel.menuTitle.observe(this, Observer {
+        observe(viewModel.menuTitle) {
             menu?.findItem(R.id.city)?.title = it
-        })
+        }
 
         return true
     }
@@ -40,6 +40,14 @@ class MainActivity : AppCompatActivity() {
         return when (item?.itemId) {
             R.id.city -> {
                 navigationController.navigate(MainActivityNavGraphDirections.openCityFilter())
+
+                true
+            }
+            R.id.start -> {
+
+                true
+            }
+            R.id.end -> {
 
                 true
             }

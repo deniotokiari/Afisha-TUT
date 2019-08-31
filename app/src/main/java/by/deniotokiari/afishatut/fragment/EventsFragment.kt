@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import by.deniotokiari.afishatut.R
 import by.deniotokiari.afishatut.adapter.EventsViewPagerAdapter
 import by.deniotokiari.afishatut.api.City
+import by.deniotokiari.afishatut.extensions.observe
 import by.deniotokiari.afishatut.extensions.preference
 import by.deniotokiari.afishatut.viewmodel.EventsViewModel
 import by.deniotokiari.afishatut.viewmodel.MainActivityViewModel
@@ -37,38 +37,34 @@ class EventsFragment : Fragment() {
         adapter = EventsViewPagerAdapter(requireFragmentManager())
 
         view_pager.adapter = adapter
-
-        swipe_to_refresh.setOnRefreshListener { viewModel.refresh() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.categories.observe(viewLifecycleOwner, Observer {
+        observe(viewModel.categories) {
             when (it) {
                 is Resource.Loading -> {
-                    progress.visibility = if (swipe_to_refresh.isRefreshing) View.GONE else View.VISIBLE
+                    progress.visibility = if (adapter.count > 0) View.GONE else View.VISIBLE
                 }
                 is Resource.Success -> {
-                    swipe_to_refresh.isRefreshing = false
                     progress.visibility = View.GONE
 
                     it.data?.also { result -> adapter.updateItems(result) }
                 }
                 is Resource.Error -> {
-                    swipe_to_refresh.isRefreshing = false
                     progress.visibility = View.GONE
                 }
             }
-        })
-        viewModel.queryParams.observe(this, Observer { (start, end, city) ->
+        }
+        observe(viewModel.queryParams) { (start, end, city) ->
             city?.also {
                 activityViewModel.updateTitle(it)
                 currentCity = it.value
             }
 
             viewModel.loadEvents(start, end, city)
-        })
+        }
 
         val startTime: Long = Calendar.getInstance().timeInMillis
         val endTime: Long = Calendar.getInstance().apply {

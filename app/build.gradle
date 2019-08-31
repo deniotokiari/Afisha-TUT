@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion config.compileSdkVersion
+
+    defaultConfig {
+        applicationId config.applicationId
+        minSdkVersion config.minSdkVersion
+        targetSdkVersion config.targetSdkVersion
+        versionCode version_code as Integer
+        versionName version_name
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation libs.appcompat
+    implementation libs.constraintlayout
+    implementation libs.core_ktx
+    implementation libs.glide
+    implementation libs.jsoup
+    implementation libs.koin_scope
+    implementation libs.koin_viewmodel
+    implementation libs.kotlin
+    implementation libs.lifecycle
+    implementation libs.material
+
+    testImplementation libs.junit
+    testImplementation libs.koin_test
+}

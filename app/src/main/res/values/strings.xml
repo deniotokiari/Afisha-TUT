@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">AfishaTUT</string>
+
+    <string name="CITY_MINSK">Minsk</string>
+    <string name="CITY_GRODNO">Grodno</string>
+    <string name="CITY_BREST">Brest</string>
+    <string name="CITY_VITEBSK">Vitebsk</string>
+    <string name="CITY_MOGILEV">Mogilev</string>
+    <string name="CITY_GOMEL">Gomel</string>
+
+    <string name="CITY">City</string>
+</resources>

@@ -1,0 +1,41 @@
+apply from: 'dependencies.gradle'
+apply plugin: "com.github.ben-manes.versions"
+
+buildscript {
+    apply from: 'dependencies.gradle'
+
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath gradle_plugins.gradle
+        classpath gradle_plugins.kotlin
+        classpath gradle_plugins.versions_plugin
+    }
+}
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+dependencyUpdates.resolutionStrategy {
+    componentSelection { rules ->
+        rules.all { ComponentSelection selection ->
+            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm', 'preview'].any { qualifier ->
+                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+            }
+
+            if (rejected) {
+                selection.reject('Release candidate')
+            }
+        }
+    }
+}

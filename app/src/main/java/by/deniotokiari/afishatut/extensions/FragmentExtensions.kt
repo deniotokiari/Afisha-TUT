@@ -1,8 +1,13 @@
 package by.deniotokiari.afishatut.extensions
 
+import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 
 inline fun <reified T : Fragment> newFragmentInstance(vararg params: Pair<String, Any>): T {
     return T::class.java.newInstance().apply { arguments = bundleOf(*params) }
+}
+
+inline fun <reified T : Fragment> newFragmentInstance(args: Bundle): T {
+    return T::class.java.newInstance().apply { arguments = args }
 }

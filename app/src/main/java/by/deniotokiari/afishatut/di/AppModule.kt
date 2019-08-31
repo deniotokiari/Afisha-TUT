@@ -10,6 +10,8 @@ import org.koin.dsl.module
 
 val appModule: Module = module {
 
+    single { get<Context>().resources }
+
     single { AfishaTutApi() }
 
     single { AfishaTutParser(get()) }

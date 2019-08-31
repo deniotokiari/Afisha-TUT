@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.deniotokiari.afishatut.R
 import by.deniotokiari.afishatut.api.City
-import by.deniotokiari.afishatut.viewmodel.MainActivityViewModel
+import by.deniotokiari.afishatut.viewmodel.EventsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.adapter_filter_city.view.*
 import kotlinx.android.synthetic.main.fragment_bottom_filter_city.*
@@ -18,7 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class CityFilterBottomDialogFragment : BottomSheetDialogFragment() {
 
-    private val viewModel: MainActivityViewModel by sharedViewModel()
+    private val viewModel: EventsViewModel by sharedViewModel()
 
     private lateinit var filterAdapter: FilterRecyclerViewAdapter
 
@@ -65,7 +65,7 @@ class CityFilterBottomDialogFragment : BottomSheetDialogFragment() {
 
     private class FilterRecyclerViewAdapter(
         private val context: Context,
-        private val viewModel: MainActivityViewModel,
+        private val viewModel: EventsViewModel,
         private val clickListener: View.OnClickListener
     ) : RecyclerView.Adapter<FilterViewHolder>() {
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity_nav_graph"
+    app:startDestination="@id/events_fragment">
+
+    <fragment
+        android:id="@+id/events_by_category_fragment"
+        android:name="by.deniotokiari.afishatut.fragment.EventsByCategoryFragment"
+        tools:layout="@layout/fragment_events_by_category">
+        <argument
+            android:name="category"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/events_fragment"
+        android:name="by.deniotokiari.afishatut.fragment.EventsFragment"
+        tools:layout="@layout/fragment_events" />
+
+    <dialog
+        android:id="@+id/city_filter_dialog"
+        android:name="by.deniotokiari.afishatut.fragment.CityFilterBottomDialogFragment"
+        tools:layout="@layout/fragment_bottom_filter_city" />
+
+    <action
+        android:id="@+id/open_city_filter"
+        app:destination="@id/city_filter_dialog" />
+</navigation>

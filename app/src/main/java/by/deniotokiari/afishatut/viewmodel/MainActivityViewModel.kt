@@ -1,79 +1,21 @@
 package by.deniotokiari.afishatut.viewmodel
 
-import androidx.lifecycle.*
-import by.deniotokiari.afishatut.api.AfishaTutParser
+import android.content.res.Resources
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import by.deniotokiari.afishatut.api.City
-import by.deniotokiari.afishatut.enitity.Event
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainActivityViewModel(
-    private val parser: AfishaTutParser
+    private val resources: Resources
 ) : ViewModel() {
 
-    private val _eventsByCategories: MutableMap<String, List<Event>> = mutableMapOf()
-    private val _categories: MutableLiveData<Resource<List<String>>> = MutableLiveData()
+    private val _menuTitle: MutableLiveData<String> = MutableLiveData()
 
-    val categories: LiveData<Resource<List<String>>> = _categories
-    val city: MutableLiveData<City> = MutableLiveData()
-    val start: MutableLiveData<Long> = MutableLiveData()
-    val end: MutableLiveData<Long> = MutableLiveData()
-    val queryParams: MediatorLiveData<Triple<Long?, Long?, City?>> = MediatorLiveData()
+    val menuTitle: LiveData<String>
+        get() = _menuTitle
 
-    init {
-        fun merge(start: Long?, end: Long?, city: City?) {
-            queryParams.postValue(
-                Triple(
-                    start,
-                    end,
-                    city
-                )
-            )
-        }
-
-        queryParams.addSource(city) {
-            merge(queryParams.value?.first, queryParams.value?.second, it)
-        }
-        queryParams.addSource(start) {
-            merge(it, queryParams.value?.second, queryParams.value?.third)
-        }
-        queryParams.addSource(end) {
-            merge(queryParams.value?.first, it, queryParams.value?.third)
-        }
+    fun updateTitle(city: City) {
+        _menuTitle.value = resources.getString(city.title)
     }
-
-    fun loadEvents(start: Long?, end: Long?, city: City?) {
-        _categories.postValue(Resource.Loading())
-
-        if (start != null && city != null) {
-            viewModelScope.launch {
-                withContext(Dispatchers.IO) {
-                    parser.getEvents(start, end, city)
-                        ?.also { result: List<Event> ->
-                            _eventsByCategories.clear()
-                            _eventsByCategories.putAll(
-                                result
-                                    .filter { it.category.isNotEmpty() }
-                                    .groupBy { it.category }
-                            )
-
-                            _categories.postValue(
-                                Resource.Success(
-                                    _eventsByCategories
-                                        .keys
-                                        .toList()
-                                )
-                            )
-                        }
-                        ?: _categories.postValue(Resource.Error())
-                }
-            }
-        } else {
-            _categories.postValue(Resource.Error())
-        }
-    }
-
-    fun getEventsByCategory(category: String): List<Event> = _eventsByCategories[category] ?: emptyList()
-
 }

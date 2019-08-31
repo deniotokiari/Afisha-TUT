@@ -12,6 +12,7 @@ buildscript {
     dependencies {
         classpath gradle_plugins.gradle
         classpath gradle_plugins.kotlin
+        classpath gradle_plugins.navigation
         classpath gradle_plugins.versions_plugin
     }
 }

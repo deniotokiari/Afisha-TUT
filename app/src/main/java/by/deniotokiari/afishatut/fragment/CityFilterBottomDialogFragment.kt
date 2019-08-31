@@ -29,22 +29,20 @@ class CityFilterBottomDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        context?.also {
-            filterAdapter = FilterRecyclerViewAdapter(
-                it,
-                viewModel,
-                View.OnClickListener { adapterView ->
-                    val item: City = adapterView.tag as City
+        filterAdapter = FilterRecyclerViewAdapter(
+            requireContext(),
+            viewModel,
+            View.OnClickListener { adapterView ->
+                val item: City = adapterView.tag as City
 
-                    viewModel.city.value = item
+                viewModel.updateCity(item)
 
-                    dismiss()
-                })
+                dismiss()
+            })
 
-            cities_rv.apply {
-                layoutManager = LinearLayoutManager(context)
-                adapter = filterAdapter
-            }
+        cities_rv.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = filterAdapter
         }
     }
 
@@ -83,7 +81,7 @@ class CityFilterBottomDialogFragment : BottomSheetDialogFragment() {
         override fun onBindViewHolder(holder: FilterViewHolder, position: Int) {
             val item: City = items[position]
 
-            viewModel.queryParams.value?.third?.also { holder.bind(item, isLast(position), it) }
+            viewModel.city.value?.also { holder.bind(item, isLast(position), it) }
         }
 
         private fun isLast(position: Int): Boolean = position == items.size - 1
@@ -94,7 +92,6 @@ class CityFilterBottomDialogFragment : BottomSheetDialogFragment() {
 
             notifyDataSetChanged()
         }
-
     }
 
     private class FilterViewHolder(
@@ -120,7 +117,5 @@ class CityFilterBottomDialogFragment : BottomSheetDialogFragment() {
                 View.VISIBLE
             }
         }
-
     }
-
 }

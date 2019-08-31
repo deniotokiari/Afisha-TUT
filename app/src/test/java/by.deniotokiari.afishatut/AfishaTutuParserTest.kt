@@ -1,7 +1,7 @@
 package by.deniotokiari.afishatut
 
-import by.deniotokiari.afishatut.api.AfishaTutApi
 import by.deniotokiari.afishatut.api.AfishaTutParser
+import by.deniotokiari.afishatut.api.City
 import by.deniotokiari.afishatut.enitity.Event
 import org.junit.Assert
 import org.junit.Test
@@ -15,7 +15,7 @@ class AfishaTutuParserTest : AppKointTest() {
     fun `should parse events for today`() {
         val result: List<Event>? = parser.getEvents(
             start = System.currentTimeMillis(),
-            city = AfishaTutApi.City.MINSK
+            city = City.MINSK
         )
 
         Assert.assertNotNull(result)

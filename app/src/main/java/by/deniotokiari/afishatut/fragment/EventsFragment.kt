@@ -37,6 +37,8 @@ class EventsFragment : Fragment() {
         adapter = EventsViewPagerAdapter(requireFragmentManager())
 
         view_pager.adapter = adapter
+
+        swipe_to_refresh.setOnRefreshListener { viewModel.refresh() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -45,22 +47,25 @@ class EventsFragment : Fragment() {
         viewModel.categories.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Loading -> {
-                    progress.visibility = View.VISIBLE
-                }
-                is Resource.Error -> {
-                    progress.visibility = View.GONE
+                    progress.visibility = if (swipe_to_refresh.isRefreshing) View.GONE else View.VISIBLE
                 }
                 is Resource.Success -> {
-                    it.data?.also { result -> adapter.updateItems(result) }
+                    swipe_to_refresh.isRefreshing = false
+                    progress.visibility = View.GONE
 
+                    it.data?.also { result -> adapter.updateItems(result) }
+                }
+                is Resource.Error -> {
+                    swipe_to_refresh.isRefreshing = false
                     progress.visibility = View.GONE
                 }
             }
         })
         viewModel.queryParams.observe(this, Observer { (start, end, city) ->
-            city?.value?.also { currentCity = it }
-
-            city?.also { activityViewModel.updateTitle(it) }
+            city?.also {
+                activityViewModel.updateTitle(it)
+                currentCity = it.value
+            }
 
             viewModel.loadEvents(start, end, city)
         })

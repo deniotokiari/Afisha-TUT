@@ -74,6 +74,11 @@ class EventsViewModel(
         }
     }
 
-    fun getEventsByCategory(category: String): List<Event> = _eventsByCategories[category] ?: emptyList()
+    fun refresh() {
+        queryParams.value?.also { (start, end, city) ->
+            loadEvents(start, end, city)
+        }
+    }
 
+    fun getEventsByCategory(category: String): List<Event> = _eventsByCategories[category] ?: emptyList()
 }

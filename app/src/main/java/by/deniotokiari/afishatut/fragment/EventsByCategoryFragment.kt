@@ -28,8 +28,8 @@ class EventsByCategoryFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_events_by_category, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val adapter = EventsRecyclerVIewAdapter(LayoutInflater.from(context), imageLoader) {
             context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it.uri)))
@@ -42,5 +42,4 @@ class EventsByCategoryFragment : Fragment() {
 
         adapter.updateItems(eventsViewModel.getEventsByCategory(args.category))
     }
-
 }

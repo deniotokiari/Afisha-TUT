@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:id="@+id/end"
+        android:id="@+id/start"
         android:enabled="true"
         android:title="@null"
         app:showAsAction="ifRoom"
-        tools:title="1 Sep" />
+        tools:title="1 Aug" />
     <item
-        android:id="@+id/start"
+        android:id="@+id/end"
         android:enabled="true"
         android:title="@null"
         app:showAsAction="ifRoom"

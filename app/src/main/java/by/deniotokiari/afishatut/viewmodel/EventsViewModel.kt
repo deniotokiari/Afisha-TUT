@@ -20,7 +20,6 @@ class EventsViewModel(
     private val _city: MutableLiveData<City> = MutableLiveData(City.fromString(prefsCity))
     private val _start: MutableLiveData<Long> = MutableLiveData(Calendar.getInstance().timeInMillis)
     private val _end: MutableLiveData<Long> = MutableLiveData(Calendar.getInstance().apply {
-        set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
         add(Calendar.DATE, 7)
     }.timeInMillis)
     private val query: MediatorLiveData<Triple<Long?, Long?, City?>> = MediatorLiveData()

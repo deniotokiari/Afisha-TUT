@@ -28,6 +28,10 @@
     <dialog
         android:id="@+id/date_picker_dialog"
         android:name="by.deniotokiari.afishatut.fragment.DatePickerDialogFragment">
+        <argument
+            android:name="min_date"
+            app:argType="long"
+            app:nullable="false" />
     </dialog>
 
     <action

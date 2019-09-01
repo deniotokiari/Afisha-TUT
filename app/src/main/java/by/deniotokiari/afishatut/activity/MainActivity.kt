@@ -52,12 +52,23 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.start -> {
-                navigationController.navigate(MainActivityNavGraphDirections.openDatePicker())
+                navigationController.navigate(
+                    MainActivityNavGraphDirections.openDatePicker(
+                        viewModel.start.value ?: 0L,
+                        viewModel.start.value ?: 0L,
+                        viewModel.end.value ?: 0L
+                    )
+                )
 
                 true
             }
             R.id.end -> {
-                navigationController.navigate(MainActivityNavGraphDirections.openDatePicker())
+                navigationController.navigate(
+                    MainActivityNavGraphDirections.openDatePicker(
+                        viewModel.end.value ?: 0L,
+                        viewModel.start.value ?: 0L
+                    )
+                )
 
                 true
             }

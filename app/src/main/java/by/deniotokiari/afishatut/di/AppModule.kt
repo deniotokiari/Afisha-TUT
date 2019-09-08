@@ -7,17 +7,18 @@ import by.deniotokiari.afishatut.thirdparty.GlideImageLoader
 import by.deniotokiari.afishatut.thirdparty.ImageLoader
 import org.koin.core.module.Module
 import org.koin.dsl.module
+import org.koin.experimental.builder.single
+import org.koin.experimental.builder.singleBy
 
 val appModule: Module = module {
 
     single { get<Context>().resources }
 
-    single { AfishaTutApi() }
+    single<AfishaTutApi>()
 
-    single { AfishaTutParser(get()) }
+    single<AfishaTutParser>()
 
-    single<ImageLoader> { GlideImageLoader() }
+    singleBy<ImageLoader, GlideImageLoader>()
 
     factory { get<Context>().getSharedPreferences("app_prefs", Context.MODE_PRIVATE) }
-
 }

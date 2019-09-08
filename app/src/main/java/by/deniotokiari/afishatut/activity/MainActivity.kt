@@ -12,6 +12,7 @@ import by.deniotokiari.afishatut.extensions.observe
 import by.deniotokiari.afishatut.viewmodel.EventsViewModel
 import by.deniotokiari.afishatut.viewmodel.MenuViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +22,8 @@ class MainActivity : AppCompatActivity() {
     private val navigationController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportFragmentManager.fragmentFactory = get()
+
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)

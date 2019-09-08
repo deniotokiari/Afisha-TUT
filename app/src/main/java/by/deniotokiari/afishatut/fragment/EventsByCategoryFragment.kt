@@ -16,14 +16,13 @@ import by.deniotokiari.afishatut.thirdparty.ImageLoader
 import by.deniotokiari.afishatut.viewmodel.EventsViewModel
 import by.deniotokiari.afishatut.viewmodel.Resource
 import kotlinx.android.synthetic.main.fragment_events_by_category.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class EventsByCategoryFragment : Fragment() {
+class EventsByCategoryFragment(
+    private val imageLoader: ImageLoader
+) : Fragment() {
 
     private val eventsViewModel: EventsViewModel by sharedViewModel()
-    private val imageLoader: ImageLoader by inject()
-
     private val args: EventsByCategoryFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

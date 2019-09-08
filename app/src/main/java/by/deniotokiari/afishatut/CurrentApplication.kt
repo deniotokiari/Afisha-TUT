@@ -2,6 +2,7 @@ package by.deniotokiari.afishatut
 
 import android.app.Application
 import by.deniotokiari.afishatut.di.appModule
+import by.deniotokiari.afishatut.di.fragmentModule
 import by.deniotokiari.afishatut.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -15,8 +16,11 @@ class CurrentApplication : Application() {
             androidContext(this@CurrentApplication)
 
             modules(
-                appModule,
-                viewModelModule
+                listOf(
+                    appModule,
+                    viewModelModule,
+                    fragmentModule
+                )
             )
         }
     }
